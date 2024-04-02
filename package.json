@@ -9,10 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "dotenv": "^16.4.5",
     "frames.js": "^0.11.1",
     "next": "14.1.4",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "viem": "^2.9.6"
   },
   "devDependencies": {
     "typescript": "^5",
