@@ -1,28 +1,40 @@
 import { Button } from "frames.js/core";
 import { frames } from "./frames";
-import { UrlObject } from "url";
  
 const handleRequest = frames(async (ctx) => {
-  const base = new URL(
+  const txUrl = new URL(
+    "/txdata",
+    process.env.NEXT_PUBLIC_HOST
+      ? `https://${process.env.NEXT_PUBLIC_HOST}`
+      : "http://localhost:3000"
+  );
+  const url = new URL(
     "/frames",
     process.env.NEXT_PUBLIC_HOST
       ? `https://${process.env.NEXT_PUBLIC_HOST}`
       : "http://localhost:3000"
-  )
+  );
+  console.log(`CTX: ${JSON.stringify(ctx)}`);
   if (ctx.message?.transactionId) {
     return {
       image: (
-        <div tw="bg-purple-800 text-white w-full h-full justify-center items-center flex">
-          Transaction submitted! {ctx.message.transactionId}
+        <div tw="text-black w-full h-full justify-center items-center flex flex-col" style={{ fontSize: '1.25rem'}}>
+          <p>Transaction submitted. Our birds are laying your egg!</p>
+          <p>Refresh by clicking View Egg below{'\n'}<br />It may take up to 60 seconds to complete.</p>
+          <p>TX: ${ctx.message?.transactionId}</p>
         </div>
       ),
       imageOptions: {
         aspectRatio: "1:1",
       },
       buttons: [
+        <Button key="view_egg" action="post" target={`${url}/view/?tx=${ctx.message.transactionId}`}>
+          View Egg
+        </Button>,
         <Button
+          key="blockexplorer"
           action="link"
-          target={`https://www.onceupon.gg/tx/${ctx.message.transactionId}`}
+          target={`https://basescan.org/tx/${ctx.message.transactionId}`}
         >
           View on block explorer
         </Button>,
@@ -36,8 +48,8 @@ const handleRequest = frames(async (ctx) => {
       aspectRatio: "1:1",
     },
     buttons: [
-      <Button action="tx" target="/txdata" post_url="/frames">
-        Find Your Easter Egg!
+      <Button key="tx" action="tx" target={`${txUrl}`} post_url={`${url}`}>
+        Find Your (After) Easter Egg!
       </Button>,
     ],
   };

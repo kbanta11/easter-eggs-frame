@@ -45,9 +45,12 @@ const design: OptionMap = {
     "geometric": { value: "geometric patterns", odds: (15/100) },
     "psychedelic": { value: "psychedelic patterns", odds: (10/100) },
     "human-like": { value: "with cartoony human features", odds: (3/100) },
+    "tie-dye": { value: "with a tie-dye design", odds: (8/100) },
+    "modern": { value: "modern, industrial design", odds: (7/100) }
 }
 
-const degen = "with a purple top hat on top of the egg"
+const degen = "with a purple top hat on top of the egg and other purple features"
+const higher = "with an up arrow on the egg (can be green, doesn't have to be) and other up-arrow features or green elements"
 
 const calculateBasicOdds = (options: OptionMap) => {
     const totalOdds = Object.values(options).reduce((sum, { odds }) => sum + odds, 0);
@@ -75,9 +78,11 @@ const buildPrompt = (id: number) => {
     const selectedColorType = selectOption(colorType);
     const selectedDesign = selectOption(design);
     const includeDegen = id === 69 ? true : Math.random() < 0.015;
+    const includeHigher = !includeDegen && Math.random() < 0.025;
     
     const parts = [basePrompt, selectedColor.value, selectedColorType.value, selectedDesign.value]
     if (includeDegen) parts.push(degen);
+    if (includeHigher) parts.push(higher);
 
     return { 
         prompt: parts.filter((p) => p && p.length > 0).join("; "), 

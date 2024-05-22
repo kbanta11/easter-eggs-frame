@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "./tsconfig.json", // Extend your main tsconfig
+  "compilerOptions": {
+    "module": "CommonJS", // Adjust for Node.js compatibility
+    "noEmit": false, // Allow emitting JS files
+    "moduleResolution": "Node", // Use Node's resolution strategy
+    "outDir": "./dist" // Specify output directory for compiled JS
+  },
+  "include": ["scripts/**/*.ts"] // Target your scripts specifically
+}

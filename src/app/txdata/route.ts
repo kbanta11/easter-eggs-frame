@@ -23,17 +23,17 @@ export async function POST(
   }
 
   const calldata = encodeFunctionData({
-    abi: easterEggABI,
+    abi: easterEggABI.abi,
     functionName: "mint",
     args: [], //TODO - update for contract mint function
   });
 
   return NextResponse.json({
-    chainId: `eip155:84532`, // Base Sepolia TODO
+    chainId: `eip155:8453`, // Base Chain Id
     method: "eth_sendTransaction",
     params: {
-      abi: easterEggABI as Abi,
-      to: `0x${process.env.NFT_CONTRACT_BASE_SEPOLIA_ADDRESS!}`,
+      abi: easterEggABI.abi as Abi,
+      to: `0x${process.env.NFT_CONTRACT_BASE_ADDRESS!}`,
       data: calldata,
       value: '0',
     },
